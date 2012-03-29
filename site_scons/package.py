@@ -26,7 +26,7 @@ ts = buildtime.strftime("%m/%d/%y %H:%M")
 # commit
 gitCmd = "git"
 if platform.system() == "Windows":
-	gitCmd += ".cmd"
+	gitCmd += ".exe"
 
 p = subprocess.Popen([gitCmd,"show","--abbrev-commit"],stderr=subprocess.PIPE, stdout=subprocess.PIPE)
 githash = p.communicate()[0][7:].split('\n')[0].strip()
@@ -310,7 +310,6 @@ def zip_mobileweb(zf,basepath,version):
 
 def zip_blackberry(zf,basepath,version):
 	# TODO Mac: adjust zipping logic for the mobile_sdk as we add to it, using zip_mobileweb as starting point
-	print 'zip_blackberry', zf, basepath, version
 	subs = {
 		"__VERSION__":version,
 		"__TIMESTAMP__":ts,
