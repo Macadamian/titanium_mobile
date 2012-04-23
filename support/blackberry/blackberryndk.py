@@ -138,7 +138,9 @@ class BlackberryNDK:
 
 	def build(self, project, variant):
 		assert os.path.exists(project)
-		command = ['mkbuild', project, '-variant', variant]
+		os.chdir(project)
+		# TODO Mac: Figure out do we need here to differentiate build between makefile and managed by qde 
+		command = ['make', variant]
 		self._run(command)
 
 	def package(self, package, savePath, projectName):

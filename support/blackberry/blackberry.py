@@ -43,6 +43,16 @@ class Blackberry(object):
 			'buildlocation':None # TODO MAC: Find out how specify the build location
 		}
 		
+		# Configuration for Makefile
+		self.configMakefile = {
+			'target':self.name
+		}
+
+		# Configuration for pro file
+		self.configPro = {
+			'target':self.name
+		}
+
 	def create(self, dir): 
 		project_dir = os.path.join(dir, self.name)
 
@@ -62,7 +72,7 @@ class Blackberry(object):
 		shutil.copytree(os.path.join(template_dir,'resources'),blackberry_project_resources)
 		
 		# TODO Mac: For now used temporarily created directory where exist source files
-		sourcePath = os.path.join(template_dir,'HelloWorldDisplay')
+		sourcePath = os.path.join(template_dir,'EmptyProject')
 		for file in os.listdir(sourcePath):
 			path = os.path.join(sourcePath, file)
 			try:
@@ -85,6 +95,12 @@ class Blackberry(object):
 		# copy project file
 		shutil.copy2(os.path.join(templates,'project'), os.path.join(build_dir, '.project'))
 		_renderTemplate(os.path.join(build_dir,'.project'), self.configProject)		
+		# copy Makefile
+		shutil.copy2(os.path.join(templates,'Makefile'), build_dir)
+		_renderTemplate(os.path.join(build_dir,'Makefile'), self.configMakefile)		
+		# copy .pro file
+		shutil.copy2(os.path.join(templates,'project.pro'), os.path.join(build_dir, '%s.pro' % self.name))
+		_renderTemplate(os.path.join(build_dir, '%s.pro' % self.name), self.configPro)		
 
 		# import project into workspace so it can be built with mkbuild
 		self.ndk.importProject(build_dir)
@@ -133,6 +149,28 @@ def __runTemplatingProjectTest(configProj):
 		# __unitTestTraceback()
 		return False
 
+def __runTemplatingProTest(configPro):
+	projectFile = os.path.join(template_dir, 'templates', 'project.pro')
+	try:
+		tmpl = _loadTemplate(projectFile)
+		tmpl.render(config = configPro)
+		return True
+	except:
+		# Uncomment the following function for debugging
+		# __unitTestTraceback()
+		return False
+
+def __runTemplatingMakefileTest(configMakefile):
+	makeFile = os.path.join(template_dir, 'templates', 'Makefile')
+	try:
+		tmpl = _loadTemplate(makeFile)
+		tmpl.render(config = configMakefile)
+		return True
+	except:
+		# Uncomment the following function for debugging
+		# __unitTestTraceback()
+		return False
+
 def __unitTestTraceback():
 	from mako.exceptions import RichTraceback
 	traceback = RichTraceback()
@@ -157,6 +195,14 @@ def __runUnitTests():
 		
 	with UnitTest('Test template replacing on .project file..'):
 		passed = __runTemplatingProjectTest(bb.configProject)
+		assert passed
+
+	with UnitTest('Test template replacing on .pro file..'):
+		passed = __runTemplatingProTest(bb.configPro)
+		assert passed
+
+	with UnitTest('Test template replacing on Makefile file..'):
+		passed = __runTemplatingMakefileTest(bb.configMakefile)
 		assert passed
 	
 	print '\nFinished Running Unit Tests'
