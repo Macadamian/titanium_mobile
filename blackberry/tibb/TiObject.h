@@ -58,8 +58,7 @@ private:
 #define NATIVE_TYPE_CSTRING         1
 #define NATIVE_TYPE_INT             2
 #define NATIVE_TYPE_DOUBLE          3
-#define NATIVE_TYPE_BOOL            4
-#define NATIVE_TYPE_OBJECT          5
+#define NATIVE_TYPE_OBJECT          4
 
 enum VALUE_MODIFY
 {

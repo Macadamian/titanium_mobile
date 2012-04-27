@@ -152,8 +152,20 @@ int NativeContainerObject::addChildNativeObject(NativeObject* obj)
 
 int NativeContainerObject::open()
 {
-    container_->setLayout(new AbsoluteLayout());
-    nativeObjectFactory_->setRootContainer(this);
+    bb::cascades::Container* appContainer = Container::create();
+    appContainer->setLayout(new DockLayout());
+    container_->setLayout(StackLayout::create());
+    DockLayoutProperties* layout = DockLayoutProperties::create();
+    layout->setHorizontalAlignment(HorizontalAlignment::Fill);
+    layout->setVerticalAlignment(VerticalAlignment::Fill);
+    container_->setLayoutProperties(layout);
+    // TODO: remove this hard coded width
+    appContainer->setPreferredWidth(1024.0f);
+    container_->setPreferredWidth(1024.0f);
+    appContainer->add(container_);
+    NativeContainerObject* root = new NativeContainerObject(appContainer);
+    nativeObjectFactory_->setRootContainer(root);
+    root->release();
     return NATIVE_ERROR_OK;
 }
 

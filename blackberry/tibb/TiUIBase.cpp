@@ -17,79 +17,59 @@
 const static TiProperty g_tiProperties[] =
 {
     {
-        "anchorPoint", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        N_PROP_ANCHOR_POINT
+        "anchorPoint", "", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        NATIVE_TYPE_OBJECT, N_PROP_ANCHOR_POINT
     },
 
     {
-        "animatedCenterPoint", TI_PROP_PERMISSION_READ,
-        N_PROP_ANIMATED_CENTER_POINT
+        "animatedCenterPoint", "", TI_PROP_PERMISSION_READ,
+        NATIVE_TYPE_OBJECT, N_PROP_ANIMATED_CENTER_POINT
     },
 
     {
-        "autoLink", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        N_PROP_AUTO_LINK
+        "autoLink", "", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        NATIVE_TYPE_INT, N_PROP_AUTO_LINK
     },
 
     {
-        "backgroundColor", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        N_PROP_BACKGROUND_COLOR
+        "backgroundColor", "", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        NATIVE_TYPE_INT, N_PROP_BACKGROUND_COLOR
     },
 
     {
-        "color", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        N_PROP_COLOR
+        "label", "", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        NATIVE_TYPE_CSTRING, N_PROP_SET_LABEL
     },
 
     {
-        "label", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        N_PROP_LABEL
+        "max", "0", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        NATIVE_TYPE_INT | NATIVE_TYPE_DOUBLE, N_PROP_SET_MAX
     },
 
     {
-        "max", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        N_PROP_MAX
+        "min", "0", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        NATIVE_TYPE_INT | NATIVE_TYPE_DOUBLE, N_PROP_SET_MIN
     },
 
     {
-        "min", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        N_PROP_MIN
+        "text", "", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        NATIVE_TYPE_CSTRING, N_PROP_SET_TEXT
     },
 
     {
-        "text", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        N_PROP_TEXT
+        "textAlign", "center", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        NATIVE_TYPE_CSTRING | NATIVE_TYPE_INT, N_PROP_SET_TEXT_ALIGN
     },
 
     {
-        "textAlign", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        N_PROP_TEXT_ALIGN
+        "top", "0", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        NATIVE_TYPE_INT | NATIVE_TYPE_DOUBLE, N_PROP_SET_TOP
     },
 
     {
-        "title", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        N_PROP_TITLE
-    },
-
-    {
-        "top", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        N_PROP_TOP
-    },
-
-    {
-        "value", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        N_PROP_VALUE
-    },
-
-    {
-        "visible", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        N_PROP_VISIBLE
-    },
-
-    {
-        "title", "", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        NATIVE_TYPE_CSTRING, N_PROP_TITLE
-    },
+        "value", "0", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        NATIVE_TYPE_INT, N_PROP_SET_VALUE
+    }
 };
 
 TiUIBase::TiUIBase()
@@ -151,7 +131,7 @@ NativeObject* TiUIBase::getNativeObject() const
     return nativeObject_;
 }
 
-void TiUIBase::setTiMappingProperties(const TiProperty* props, int propertyCount)
+void TiUIBase::setTiMappingProperties(const TiProperty* prop, int propertyCount)
 {
     string name;
     char c[2];
@@ -159,22 +139,22 @@ void TiUIBase::setTiMappingProperties(const TiProperty* props, int propertyCount
     for (int i = 0; i < propertyCount; i++)
     {
         TiObject* value = TiPropertyMapObject::addProperty(this, prop[i].propertyName, prop[i].nativePropertyNumber,
+                          prop[i].supportedTypes,
                           valueModify, this);
         if (prop[i].permissions & TI_PROP_PERMISSION_WRITE)
         {
-            c[0] = toupper(props[i].propertyName[0]);
+            c[0] = toupper(prop[i].propertyName[0]);
             name = "set";
             name += c;
-            name += props[i].propertyName + 1;
+            name += prop[i].propertyName + 1;
             TiPropertySetFunctionObject::addPropertySetter(this, value, name.c_str());
         }
-        // For all properties that have read permissions, add a getter method, e.g., var test=myLabel.text; var test=myLabel.getText();
-        if (props[i].permissions & TI_PROP_PERMISSION_READ)
+        if (prop[i].permissions & TI_PROP_PERMISSION_READ)
         {
-            c[0] = toupper(props[i].propertyName[0]);
+            c[0] = toupper(prop[i].propertyName[0]);
             name = "get";
             name += c;
-            name += props[i].propertyName + 1;
+            name += prop[i].propertyName + 1;
             TiPropertyGetFunctionObject::addPropertyGetter(this, value, name.c_str());
         }
         value->release();
