@@ -8,12 +8,18 @@ USEFILE=
 # Extra include path for libfreetype and for target overrides and patches
 EXTRA_INCVPATH+=$(QNX_TARGET)/usr/include/freetype2 \
 	$(QNX_TARGET)/../target-override/usr/include \
+	$(QNX_TARGET)/../target-override/usr/include/QtCore \
 	$(PROJECT_ROOT)/include \
 	$(PROJECT_ROOT)/../libv8/include
 
+PRE_BUILD=moc.exe -DQT_NO_DEBUG -DQT_DECLARATIVE_LIB -DQT_SCRIPT_LIB -DQT_SVG_LIB -DQT_SQL_LIB -DQT_GUI_LIB \
+	-DQT_NETWORK_LIB -DQT_CORE_LIB $(addprefix -I, $(INCVPATH)) 
+
+
 # Extra library search path for target overrides and patches
 EXTRA_LIBVPATH+=$(QNX_TARGET)/../target-override/$(CPUVARDIR)/lib \
-	$(QNX_TARGET)/../target-override/$(CPUVARDIR)/usr/lib
+	$(QNX_TARGET)/../target-override/$(CPUVARDIR)/usr/lib \
+	$(PROJECT_ROOT)/../libv8/lib/$(CPU)
 
 # Compiler options for enhanced security and recording the compiler options in release builds
 CCFLAGS+=-fstack-protector-all -D_FORTIFY_SOURCE=2 \
