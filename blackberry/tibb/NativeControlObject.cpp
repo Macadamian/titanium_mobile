@@ -23,6 +23,17 @@
 #define GET_ARRAY_SIZE(T)               ((int)(sizeof(T) / sizeof(*T)))
 
 typedef int (*NATIVE_PROPSET_CALLBACK)(NativeControlObject*, TiObject*);
+#define PROP_SETTER_BOOL(NAME)          static int prop_##NAME(NativeControlObject* object,const char* value) \
+    {\
+        bool b=false;\
+        if((stricmp(value,"true")==0)||(atoi(value)!=0)) \
+        {\
+            b=true;\
+        }\
+        return object->NAME(b);\
+    }
+
+typedef int (*NATIVE_PROPSET_CALLBACK)(NativeControlObject*, const char*);
 
 NativeControlObject::NativeControlObject()
 {
@@ -167,9 +178,7 @@ const static NATIVE_PROPSET_CALLBACK g_functionMap[] =
     NULL,                                          // N_PROP_FONT
     NULL,                                          // N_PROP_HEIGHT
     NULL,                                          // N_PROP_HIGHLIGHTED_COLOR
-    NULL,                                          // N_PROP_HINT_TEXT
     NULL,                                          // N_PROP_HTML
-    NULL,                                          // N_PROP_IMAGE
     NULL,                                          // N_PROP_KEEP_SCREEN_ON
     PROP_SETTING_FUNCTION(setLabel),               // N_PROP_LABEL
     NULL,                                          // N_PROP_LAYOUT
@@ -186,7 +195,6 @@ const static NATIVE_PROPSET_CALLBACK g_functionMap[] =
     PROP_SETTING_FUNCTION(setText),                // N_PROP_TEXT
     PROP_SETTING_FUNCTION(setTextAlign),           // N_PROP_TEXT_ALIGN
     NULL,                                          // N_PROP_TEXT_ID
-    PROP_SETTING_FUNCTION(setTitle),               // N_PROP_TITLE
     PROP_SETTING_FUNCTION(setTop),                 // N_PROP_TOP
     NULL,                                          // N_PROP_TOUCH_ENABLED
     NULL,                                          // N_PROP_TRANSFORM

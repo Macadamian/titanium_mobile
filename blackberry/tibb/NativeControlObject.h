@@ -42,6 +42,7 @@ public:
     static int getFloat(TiObject* obj, float* value);
     virtual int setTop(float top);
     virtual int setTitle(const char* title);
+
 protected:
     NativeControlObject();
     virtual ~NativeControlObject();
