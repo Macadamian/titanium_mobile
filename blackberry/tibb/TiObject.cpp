@@ -271,16 +271,16 @@ bool TiObject::userCanAddMember(const char* propertyName) const
 Handle<Value> TiObject::propGetter_(Local<String> prop, const AccessorInfo& info)
 {
     HandleScope handleScope;
-    Handle<Object> result;
+    Handle < Object > result;
+    String::Utf8Value propName(prop);
+    const char* propString = (const char*)(*propName);
     TiObject* obj = getTiObjectFromJsObject(info.Holder());
     if (obj == NULL)
     {
         // Returns "empty". This will cause V8 to go back to default lookup.
         return result;
     }
-    Handle<ObjectTemplate> global = getObjectTemplateFromJsObject(info.Holder());
-    String::Utf8Value propName(prop);
-    const char* propString = (const char*)(*propName);
+    Handle < ObjectTemplate > global = getObjectTemplateFromJsObject(info.Holder());
     TiObject* propObject = obj->onLookupMember(propString);
     if (propObject == NULL)
     {

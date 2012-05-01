@@ -33,6 +33,7 @@ protected:
 private:
     TiV8Event();
     Persistent<Function> function_;
+    //Persistent<Object> source_;
     Handle<Object> source_;
 };
 
