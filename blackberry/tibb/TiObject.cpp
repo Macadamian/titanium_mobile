@@ -18,8 +18,9 @@ TiObject::TiObject()
 }
 
 TiObject::TiObject(const char* objectName)
-    : isInitialized_(false)
-    , parentObject_(NULL)
+    :
+    isInitialized_(false),
+    parentObject_(NULL)
 {
     name_ = objectName;
 }
@@ -104,11 +105,13 @@ void TiObject::setTiObjectToJsObject(Handle<Value> jsObject, TiObject* tiObj)
 Handle<ObjectTemplate> TiObject::getObjectTemplateFromJsObject(Handle<Value> value)
 {
     HandleScope handleScope;
-    Handle<Object> obj = Handle<Object>::Cast(value);
-    Handle<Context> context = obj->CreationContext();
-    Handle<External> globalTemplateExternal = Handle<External>::Cast(
-                context->Global()->GetHiddenValue(String::New(HIDDEN_TEMP_OBJECT_PROPERTY)));
-    Handle<ObjectTemplate>temp = *((Handle<ObjectTemplate>*) globalTemplateExternal->Value());
+    Handle < Object > obj = Handle < Object > ::Cast(value);
+    Handle < Context > context = obj->CreationContext();
+    Handle < External > globalTemplateExternal = Handle < External
+            > ::Cast(
+                context->Global()->GetHiddenValue(
+                    String::New(HIDDEN_TEMP_OBJECT_PROPERTY)));
+    Handle < ObjectTemplate > temp = *((Handle<ObjectTemplate>*) globalTemplateExternal->Value());
     return handleScope.Close(temp);
 }
 

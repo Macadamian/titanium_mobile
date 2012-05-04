@@ -40,8 +40,6 @@ public:
     static int getBoolean(TiObject* obj, bool* value);
     static int getString(TiObject* obj, QString& str);
     static int getFloat(TiObject* obj, float* value);
-    virtual int setTop(float top);
-    virtual int setTitle(const char* title);
 
 protected:
     NativeControlObject();

@@ -34,6 +34,10 @@ VALUE_MODIFY TiPropertyMapObject::onValueChange(Handle<Value> oldValue, Handle<V
     Handle<String> stringValue;
     if (modify != VALUE_MODIFY_ALLOW)
     {
+        if (modify == VALUE_MODIFY_IGNORE)
+        {
+            modify = VALUE_MODIFY_ALLOW;
+        }
         return modify;
     }
     forceSetValue(newValue);
@@ -41,6 +45,10 @@ VALUE_MODIFY TiPropertyMapObject::onValueChange(Handle<Value> oldValue, Handle<V
     if (modify != VALUE_MODIFY_ALLOW)
     {
         forceSetValue(oldValue);
+        if (modify == VALUE_MODIFY_IGNORE)
+        {
+            modify = VALUE_MODIFY_ALLOW;
+        }
     }
     return modify;
 }

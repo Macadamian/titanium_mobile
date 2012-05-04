@@ -11,29 +11,14 @@
 #include "TiObject.h"
 #include <bb/cascades/Color>
 #include <qtgui/QColor>
-#include <bb/cascades/AbsoluteLayoutProperties>
 
 #define PROP_SETTING_FUNCTION(NAME)     prop_##NAME
-
 #define PROP_SETTER(NAME)               static int prop_##NAME(NativeControlObject* object, TiObject* obj) \
     {\
         return object->NAME(obj);\
     }
 
-#define GET_ARRAY_SIZE(T)               ((int)(sizeof(T) / sizeof(*T)))
-
 typedef int (*NATIVE_PROPSET_CALLBACK)(NativeControlObject*, TiObject*);
-#define PROP_SETTER_BOOL(NAME)          static int prop_##NAME(NativeControlObject* object,const char* value) \
-    {\
-        bool b=false;\
-        if((stricmp(value,"true")==0)||(atoi(value)!=0)) \
-        {\
-            b=true;\
-        }\
-        return object->NAME(b);\
-    }
-
-typedef int (*NATIVE_PROPSET_CALLBACK)(NativeControlObject*, const char*);
 
 NativeControlObject::NativeControlObject()
 {
@@ -70,6 +55,7 @@ int NativeControlObject::setColor(TiObject* obj)
     return NATIVE_ERROR_NOTSUPPORTED;
 }
 
+int NativeControlObject::setMax(TiObject* obj)
 PROP_SETTER(setLabel)
 int NativeControlObject::setLabel(TiObject* obj)
 {
@@ -109,16 +95,20 @@ int NativeControlObject::setTitle(TiObject* obj)
 PROP_SETTER(setTop)
 int NativeControlObject::setTop(TiObject* obj)
 {
-    bb::cascades::AbsoluteLayoutProperties* pProp = new bb::cascades::AbsoluteLayoutProperties;
-    pProp->setPositionY(top);
-    control_->setLayoutProperties(pProp);
+    //control_->setTopMargin(top);
     return NATIVE_ERROR_OK;
 }
 
 PROP_SETTER(setValue)
 int NativeControlObject::setValue(TiObject* obj)
 {
-    return NATIVE_ERROR_NOTSUPPORTED;
+    bool visible;
+    int error = getBoolean(obj, &visible);
+    if (error != NATIVE_ERROR_OK)
+    {
+        return error;
+    }
+    return NATIVE_ERROR_OK;
 }
 
 PROP_SETTER(setVisible)
@@ -195,6 +185,7 @@ const static NATIVE_PROPSET_CALLBACK g_functionMap[] =
     PROP_SETTING_FUNCTION(setText),                // N_PROP_TEXT
     PROP_SETTING_FUNCTION(setTextAlign),           // N_PROP_TEXT_ALIGN
     NULL,                                          // N_PROP_TEXT_ID
+    PROP_SETTING_FUNCTION(setTitle),               // N_PROP_TITLE
     PROP_SETTING_FUNCTION(setTop),                 // N_PROP_TOP
     NULL,                                          // N_PROP_TOUCH_ENABLED
     NULL,                                          // N_PROP_TRANSFORM
@@ -224,11 +215,10 @@ int NativeControlObject::getColorComponents(TiObject* obj, float* r, float* g, f
     }
     Handle<String> v8color = Handle<String>::Cast(value);
     String::Utf8Value v8colorString(v8color);
-    if (!QColor::isValidColor(*v8colorString))
-    {
-        return NATIVE_ERROR_INVALID_ARG;
-    }
-    QColor qcolor(*v8colorString);
+    const char* colorCStr = *v8colorString;
+    QString colorQString = colorCStr;
+    QColor qcolor;
+    qcolor.setNamedColor(colorQString);
     qreal qr, qg, qb, qa;
     qcolor.getRgbF(&qr, &qg, &qb, &qa);
     *r = qr;

@@ -8,7 +8,8 @@
 #include "TiUIProgressBar.h"
 
 TiUIProgressBar::TiUIProgressBar(NativeObjectFactory* nativeObjectFactory)
-    : TiUIBase(nativeObjectFactory, "")
+    :
+    TiUIBase(nativeObjectFactory, "")
 {
 }
 

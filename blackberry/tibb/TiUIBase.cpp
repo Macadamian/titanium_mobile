@@ -17,68 +17,73 @@
 const static TiProperty g_tiProperties[] =
 {
     {
-        "anchorPoint", "", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        NATIVE_TYPE_OBJECT, N_PROP_ANCHOR_POINT
+        "anchorPoint", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        N_PROP_ANCHOR_POINT
     },
 
     {
-        "animatedCenterPoint", "", TI_PROP_PERMISSION_READ,
-        NATIVE_TYPE_OBJECT, N_PROP_ANIMATED_CENTER_POINT
+        "animatedCenterPoint", TI_PROP_PERMISSION_READ,
+        N_PROP_ANIMATED_CENTER_POINT
     },
 
     {
-        "autoLink", "", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        NATIVE_TYPE_INT, N_PROP_AUTO_LINK
+        "autoLink", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        N_PROP_AUTO_LINK
     },
 
     {
-        "backgroundColor", "", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        NATIVE_TYPE_INT, N_PROP_BACKGROUND_COLOR
+        "backgroundColor", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        N_PROP_BACKGROUND_COLOR
     },
 
     {
-        "color", "black", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        NATIVE_TYPE_CSTRING, N_PROP_COLOR
+        "color", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        N_PROP_COLOR
     },
 
     {
-        "label", "", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        NATIVE_TYPE_CSTRING, N_PROP_LABEL
+        "label", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        N_PROP_LABEL
     },
 
     {
-        "max", "0", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        NATIVE_TYPE_INT | NATIVE_TYPE_DOUBLE, N_PROP_MAX
+        "max", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        N_PROP_MAX
     },
 
     {
-        "min", "0", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        NATIVE_TYPE_INT | NATIVE_TYPE_DOUBLE, N_PROP_MIN
+        "min", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        N_PROP_MIN
     },
 
     {
-        "text", "", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        NATIVE_TYPE_CSTRING, N_PROP_TEXT
+        "text", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        N_PROP_TEXT
     },
 
     {
-        "textAlign", "center", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        NATIVE_TYPE_CSTRING | NATIVE_TYPE_INT, N_PROP_TEXT_ALIGN
+        "textAlign", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        N_PROP_TEXT_ALIGN
     },
 
     {
-        "top", "0", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        NATIVE_TYPE_INT | NATIVE_TYPE_DOUBLE, N_PROP_TOP
+        "title", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        N_PROP_TITLE
     },
 
     {
-        "value", "0", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        NATIVE_TYPE_INT, N_PROP_VALUE
+        "top", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        N_PROP_TOP
     },
 
     {
-        "visible", "true", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
-        NATIVE_TYPE_BOOL, N_PROP_VISIBLE
+        "value", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        N_PROP_VALUE
+    },
+
+    {
+        "visible", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        N_PROP_VISIBLE
     }
 };
 
@@ -149,7 +154,6 @@ void TiUIBase::setTiMappingProperties(const TiProperty* prop, int propertyCount)
     for (int i = 0; i < propertyCount; i++)
     {
         TiObject* value = TiPropertyMapObject::addProperty(this, prop[i].propertyName, prop[i].nativePropertyNumber,
-                          prop[i].supportedTypes,
                           valueModify, this);
         if (prop[i].permissions & TI_PROP_PERMISSION_WRITE)
         {
@@ -299,8 +303,8 @@ Handle<Value> TiUIBase::addEventListener_(void* userContext, TiObject* caller, c
         return Undefined();
     }
     TiUIBase* obj = (TiUIBase*) userContext;
-    Handle<String> eventName = Handle<String>::Cast(args[0]);
-    Handle<Function> func = Handle<Function>::Cast(args[1]);
+    Handle<String> eventName = Handle < String > ::Cast(args[0]);
+    Handle<Function> func = Handle < Function > ::Cast(args[1]);
     String::Utf8Value eventNameUTF(eventName);
     obj->onAddEventListener(*eventNameUTF, func);
     return Undefined();
