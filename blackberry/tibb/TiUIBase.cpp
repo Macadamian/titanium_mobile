@@ -84,7 +84,12 @@ const static TiProperty g_tiProperties[] =
     {
         "visible", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
         N_PROP_VISIBLE
-    }
+    },
+
+    {
+        "title", "", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        NATIVE_TYPE_CSTRING, N_PROP_TITLE
+    },
 };
 
 TiUIBase::TiUIBase()

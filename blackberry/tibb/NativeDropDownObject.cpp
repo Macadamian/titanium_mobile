@@ -31,8 +31,7 @@ int NativeDropDownObject::getObjectType() const
 
 int NativeDropDownObject::initialize(TiEventContainerFactory* containerFactory)
 {
-    // TODO Mac: Remove the temporary title, use property instead
-    dropdown_ = bb::cascades::DropDown::create().title("DropDown");
+    dropdown_ = bb::cascades::DropDown::create();
     setControl(dropdown_);
     eventClick_ = containerFactory->createEventContainer();
     eventClick_->setDataProperty("type", "click");
@@ -43,6 +42,13 @@ int NativeDropDownObject::initialize(TiEventContainerFactory* containerFactory)
 NAHANDLE NativeDropDownObject::getNativeHandle() const
 {
     return dropdown_;
+}
+
+int NativeDropDownObject::setTitle(const char* title)
+{
+    QString str = title;
+    dropdown_->setTitle(str);
+    return NATIVE_ERROR_OK;
 }
 
 int NativeDropDownObject::setEventHandler(const char* eventName, TiEvent* event)

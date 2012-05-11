@@ -5,50 +5,50 @@
  * Please see the LICENSE included with this distribution for details.
  */
 
-#ifndef NATIVEDROPDOWNOBJECT_H_
-#define NATIVEDROPDOWNOBJECT_H_
+#ifndef NATIVEOPTIONOBJECT_H_
+#define NATIVEOPTIONOBJECT_H_
 
-#include "NativeControlObject.h"
+#include "NativeObject.h"
 
 //forward declaration
 namespace bb
 {
 namespace cascades
 {
-class DropDown;
+class Option;
 }
 }
 
 class TiCascadesEventHandler;
 
 /*
- * NativeDropDownObject
+ * NativeOptionObject
  *
- * UI: DropDown
+ * UI: Option
  */
-class NativeDropDownObject : public NativeControlObject
+class NativeOptionObject : public NativeObject
 {
 public:
-    static NativeDropDownObject* createDropDown();
+    static NativeOptionObject* createOption();
     virtual int getObjectType() const;
     virtual int initialize(TiEventContainerFactory* containerFactory);
     virtual NAHANDLE getNativeHandle() const;
     virtual int setEventHandler(const char* eventName, TiEvent* event);
-    virtual int setTitle(const char* title);
     virtual void completeInitialization();
+    virtual int setText(const char* text);
 
 protected:
-    virtual ~NativeDropDownObject();
+    virtual ~NativeOptionObject();
 
 private:
-    explicit NativeDropDownObject();
+    explicit NativeOptionObject();
     // Disable copy ctor & assignment operator
-    NativeDropDownObject(const NativeDropDownObject& dropdown);
-    NativeDropDownObject& operator=(const NativeDropDownObject& dropdown);
+    NativeOptionObject(const NativeOptionObject& dropdown);
+    NativeOptionObject& operator=(const NativeOptionObject& dropdown);
     // Class members
-    bb::cascades::DropDown* dropdown_;
+    bb::cascades::Option* option_;
     TiEventContainer* eventClick_;
     TiCascadesEventHandler* eventHandler_;
 };
 
-#endif /* NATIVEDROPDOWNOBJECT_H_ */
+#endif /* NATIVEOPTIONOBJECT_H_ */

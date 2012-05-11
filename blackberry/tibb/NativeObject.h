@@ -25,6 +25,7 @@ typedef void* NAHANDLE;
 #define N_TYPE_TEXT_FIELD                       8
 #define N_TYPE_ACTIVITYINDICATOR                9
 #define N_TYPE_DROPDOWN                         10
+#define N_TYPE_OPTION                           11
 
 #define N_PROP_UNDEFINED                        0
 #define N_PROP_ANCHOR_POINT                     1
@@ -77,14 +78,15 @@ typedef void* NAHANDLE;
 #define N_PROP_TEXT                             48
 #define N_PROP_TEXT_ALIGN                       49
 #define N_PROP_TEXT_ID                          50
-#define N_PROP_TOP                              51
-#define N_PROP_TOUCH_ENABLED                    52
-#define N_PROP_TRANSFORM                        53
-#define N_PROP_VALUE                            54
-#define N_PROP_VISIBLE                          55
-#define N_PROP_WIDTH                            56
-#define N_PROP_WORD_WRAP                        57
-#define N_PROP_ZINDEX                           58
+#define N_PROP_TITLE                            51
+#define N_PROP_TOP                              52
+#define N_PROP_TOUCH_ENABLED                    53
+#define N_PROP_TRANSFORM                        54
+#define N_PROP_VALUE                            55
+#define N_PROP_VISIBLE                          56
+#define N_PROP_WIDTH                            57
+#define N_PROP_WORD_WRAP                        58
+#define N_PROP_ZINDEX                           59
 
 class NativeObjectFactory;
 class TiEvent;

@@ -119,6 +119,12 @@ int NativeControlObject::setVisible(TiObject* obj)
     return NATIVE_ERROR_OK;
 }
 
+PROP_SETTER_CSTRING(setTitle)
+int NativeControlObject::setTitle(const char* title)
+{
+    return NATIVE_ERROR_NOTSUPPORTED;
+}
+
 // PROP_SETTING_FUNCTION resolves the static name of the function, e.g.,
 // PROP_SETTING_FUNCTION(setBackgroundColor) resolves to "prop_setBackgroundColor"
 // NOTE: These must be in order of the property index.
@@ -157,7 +163,9 @@ const static NATIVE_PROPSET_CALLBACK g_functionMap[] =
     NULL,                                          // N_PROP_FONT
     NULL,                                          // N_PROP_HEIGHT
     NULL,                                          // N_PROP_HIGHLIGHTED_COLOR
+    NULL,                                          // N_PROP_HINT_TEXT
     NULL,                                          // N_PROP_HTML
+    NULL,                                          // N_PROP_IMAGE
     NULL,                                          // N_PROP_KEEP_SCREEN_ON
     PROP_SETTING_FUNCTION(setLabel),               // N_PROP_LABEL
     NULL,                                          // N_PROP_LAYOUT
@@ -174,6 +182,7 @@ const static NATIVE_PROPSET_CALLBACK g_functionMap[] =
     PROP_SETTING_FUNCTION(setText),                // N_PROP_TEXT
     PROP_SETTING_FUNCTION(setTextAlign),           // N_PROP_TEXT_ALIGN
     NULL,                                          // N_PROP_TEXT_ID
+    PROP_SETTING_FUNCTION(setTitle),               // N_PROP_TITLE
     PROP_SETTING_FUNCTION(setTop),                 // N_PROP_TOP
     NULL,                                          // N_PROP_TOUCH_ENABLED
     NULL,                                          // N_PROP_TRANSFORM
