@@ -35,6 +35,8 @@ public:
     virtual NAHANDLE getNativeHandle() const;
     virtual int setEventHandler(const char* eventName, TiEvent* event);
     virtual int setTitle(const char* title);
+    virtual int setOptions(const char* options[]);
+    virtual int setSelectedIndex(int index);
     virtual void completeInitialization();
 
 protected:

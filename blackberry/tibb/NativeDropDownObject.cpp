@@ -8,6 +8,7 @@
 #include "NativeDropDownObject.h"
 #include "TiEventContainerFactory.h"
 #include "TiCascadesEventHandler.h"
+#include "NativeOptionObject.h"
 #include <bb/cascades/DropDown>
 
 NativeDropDownObject::NativeDropDownObject()
@@ -48,6 +49,29 @@ int NativeDropDownObject::setTitle(const char* title)
 {
     QString str = title;
     dropdown_->setTitle(str);
+    dropdown_->add(bb::cascades::Option::create().text("Option 1"));
+    dropdown_->add(bb::cascades::Option::create().text("Option 2"));
+    dropdown_->add(bb::cascades::Option::create().text("Option 3"));
+    return NATIVE_ERROR_OK;
+}
+
+int NativeDropDownObject::setOptions(const char* options[])
+{
+    unsigned int length = sizeof(options);
+    for (unsigned int i = 0; i < length; ++i)
+    {
+        NativeOptionObject* option = NativeOptionObject::createOption();
+        option->setText(options[i]);
+        dropdown_->add((bb::cascades::Option*)option->getNativeHandle());
+        option->release();
+    }
+
+    return NATIVE_ERROR_OK;
+}
+
+int NativeDropDownObject::setSelectedIndex(int index)
+{
+    dropdown_->setSelectedIndex(index);
     return NATIVE_ERROR_OK;
 }
 
@@ -63,5 +87,5 @@ int NativeDropDownObject::setEventHandler(const char* eventName, TiEvent* event)
 void NativeDropDownObject::completeInitialization()
 {
     NativeControlObject::completeInitialization();
-    QObject::connect(dropdown_, SIGNAL(selectedChanged(bool selected)), eventHandler_, SLOT(setSelected(bool selected)));
+    QObject::connect(dropdown_, SIGNAL(selectedIndexChanged(int selectedIndex)), eventHandler_, SLOT(selectedIndexChanged(int selectedIndex)));
 }

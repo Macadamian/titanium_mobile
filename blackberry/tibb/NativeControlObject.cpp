@@ -11,6 +11,7 @@
 #include "TiObject.h"
 #include <bb/cascades/Color>
 #include <qtgui/QColor>
+#include <bb/cascades/AbsoluteLayoutProperties>
 
 #define PROP_SETTING_FUNCTION(NAME)     prop_##NAME
 
@@ -97,7 +98,10 @@ int NativeControlObject::setTitle(TiObject* obj)
 PROP_SETTER(setTop)
 int NativeControlObject::setTop(TiObject* obj)
 {
-    return NATIVE_ERROR_NOTSUPPORTED;
+    bb::cascades::AbsoluteLayoutProperties* pProp = new bb::cascades::AbsoluteLayoutProperties;
+    pProp->setPositionY(top);
+    control_->setLayoutProperties(pProp);
+    return NATIVE_ERROR_OK;
 }
 
 PROP_SETTER(setValue)
