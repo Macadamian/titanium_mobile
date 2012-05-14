@@ -215,10 +215,11 @@ int NativeControlObject::getColorComponents(TiObject* obj, float* r, float* g, f
     }
     Handle<String> v8color = Handle<String>::Cast(value);
     String::Utf8Value v8colorString(v8color);
-    const char* colorCStr = *v8colorString;
-    QString colorQString = colorCStr;
-    QColor qcolor;
-    qcolor.setNamedColor(colorQString);
+    if (!QColor::isValidColor(*v8colorString))
+    {
+        return NATIVE_ERROR_INVALID_ARG;
+    }
+    QColor qcolor(*v8colorString);
     qreal qr, qg, qb, qa;
     qcolor.getRgbF(&qr, &qg, &qb, &qa);
     *r = qr;

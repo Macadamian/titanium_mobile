@@ -83,7 +83,7 @@ TiObject* TiObject::getTiObjectFromJsObject(Handle<Value> value)
         return NULL;
     }
     Handle<Object> obj = Handle<Object>::Cast(value);
-    Handle<External> ext = Handle<External>::Cast(obj->GetHiddenValue(String::New(HIDDEN_TI_OBJECT_PROPERTY)));
+    Handle<External> ext = Handle<External> ::Cast(obj->GetHiddenValue(String::New(HIDDEN_TI_OBJECT_PROPERTY)));
     if (ext.IsEmpty())
     {
         return NULL;
@@ -105,13 +105,11 @@ void TiObject::setTiObjectToJsObject(Handle<Value> jsObject, TiObject* tiObj)
 Handle<ObjectTemplate> TiObject::getObjectTemplateFromJsObject(Handle<Value> value)
 {
     HandleScope handleScope;
-    Handle < Object > obj = Handle < Object > ::Cast(value);
-    Handle < Context > context = obj->CreationContext();
-    Handle < External > globalTemplateExternal = Handle < External
-            > ::Cast(
-                context->Global()->GetHiddenValue(
-                    String::New(HIDDEN_TEMP_OBJECT_PROPERTY)));
-    Handle < ObjectTemplate > temp = *((Handle<ObjectTemplate>*) globalTemplateExternal->Value());
+    Handle<Object> obj = Handle<Object>::Cast(value);
+    Handle<Context> context = obj->CreationContext();
+    Handle<External> globalTemplateExternal = Handle<External>::Cast(
+                context->Global()->GetHiddenValue(String::New(HIDDEN_TEMP_OBJECT_PROPERTY)));
+    Handle<ObjectTemplate> temp = *((Handle<ObjectTemplate>*) globalTemplateExternal->Value());
     return handleScope.Close(temp);
 }
 
@@ -274,7 +272,7 @@ bool TiObject::userCanAddMember(const char* propertyName) const
 Handle<Value> TiObject::propGetter_(Local<String> prop, const AccessorInfo& info)
 {
     HandleScope handleScope;
-    Handle < Object > result;
+    Handle<Object> result;
     String::Utf8Value propName(prop);
     const char* propString = (const char*)(*propName);
     TiObject* obj = getTiObjectFromJsObject(info.Holder());
@@ -283,14 +281,14 @@ Handle<Value> TiObject::propGetter_(Local<String> prop, const AccessorInfo& info
         // Returns "empty". This will cause V8 to go back to default lookup.
         return result;
     }
-    Handle < ObjectTemplate > global = getObjectTemplateFromJsObject(info.Holder());
+    Handle<ObjectTemplate> global = getObjectTemplateFromJsObject(info.Holder());
     TiObject* propObject = obj->onLookupMember(propString);
     if (propObject == NULL)
     {
         // TODO: lookup
         return Undefined();
     }
-    Handle<Value> ret = propObject->getValue();
+    Handle<Value>ret = propObject->getValue();
     if (!ret.IsEmpty())
     {
         return handleScope.Close(ret);
