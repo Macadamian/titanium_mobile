@@ -34,9 +34,9 @@ public:
     virtual int initialize(TiEventContainerFactory* containerFactory);
     virtual NAHANDLE getNativeHandle() const;
     virtual int setEventHandler(const char* eventName, TiEvent* event);
-    virtual int setTitle(const char* title);
-    virtual int setOptions(const char* options[]);
-    virtual int setSelectedIndex(int index);
+    virtual int setTitle(TiObject* obj);
+    virtual int setOptions(TiObject* obj);
+    virtual int setSelectedIndex(TiObject* obj);
     virtual void completeInitialization();
 
 protected:

@@ -176,7 +176,7 @@ int NativeContainerObject::setBackgroundColor(TiObject* obj)
     float b;
     float a;
 
-    int error = NativeControlObject::getColorComponents(obj, &r, &g, &b, &a);
+    int error = NativeControlObject::_getColorComponents(obj, &r, &g, &b, &a);
     if (error != NATIVE_ERROR_OK)
     {
         return error;

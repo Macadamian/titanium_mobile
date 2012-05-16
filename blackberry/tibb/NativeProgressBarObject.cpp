@@ -44,7 +44,7 @@ NAHANDLE NativeProgressBarObject::getNativeHandle() const
 int NativeProgressBarObject::setMax(TiObject* obj)
 {
     float value;
-    int error = NativeControlObject::getFloat(obj, &value);
+    int error = NativeControlObject::_getFloat(obj, &value);
     if (!N_SUCCEEDED(error))
     {
         return error;
@@ -56,7 +56,7 @@ int NativeProgressBarObject::setMax(TiObject* obj)
 int NativeProgressBarObject::setMin(TiObject* obj)
 {
     float value;
-    int error = NativeControlObject::getFloat(obj, &value);
+    int error = NativeControlObject::_getFloat(obj, &value);
     if (!N_SUCCEEDED(error))
     {
         return error;
@@ -68,7 +68,7 @@ int NativeProgressBarObject::setMin(TiObject* obj)
 int NativeProgressBarObject::setValue(TiObject* obj)
 {
     float value;
-    int error = NativeControlObject::getFloat(obj, &value);
+    int error = NativeControlObject::_getFloat(obj, &value);
     if (!N_SUCCEEDED(error))
     {
         return error;

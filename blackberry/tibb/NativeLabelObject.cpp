@@ -33,7 +33,7 @@ int NativeLabelObject::getObjectType() const
 int NativeLabelObject::setText(TiObject* obj)
 {
     QString str;
-    int error = NativeControlObject::getString(obj, str);
+    int error = NativeControlObject::_getString(obj, str);
     if (error != NATIVE_ERROR_OK)
     {
         return error;
@@ -49,7 +49,7 @@ int NativeLabelObject::setColor(TiObject* obj)
     float b;
     float a;
 
-    int error = NativeControlObject::getColorComponents(obj, &r, &g, &b, &a);
+    int error = NativeControlObject::_getColorComponents(obj, &r, &g, &b, &a);
     if (error != NATIVE_ERROR_OK)
     {
         return error;

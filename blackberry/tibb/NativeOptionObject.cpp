@@ -32,9 +32,6 @@ int NativeOptionObject::getObjectType() const
 int NativeOptionObject::initialize(TiEventContainerFactory* containerFactory)
 {
     option_ = bb::cascades::Option::create();
-    eventClick_ = containerFactory->createEventContainer();
-    eventClick_->setDataProperty("type", "click");
-    eventHandler_ = new TiCascadesEventHandler(eventClick_);
     return NATIVE_ERROR_OK;
 }
 
@@ -62,5 +59,4 @@ int NativeOptionObject::setEventHandler(const char* eventName, TiEvent* event)
 void NativeOptionObject::completeInitialization()
 {
     NativeObject::completeInitialization();
-    QObject::connect(option_, SIGNAL(selectedChanged(bool selected)), eventHandler_, SLOT(setSelected(bool selected)));
 }

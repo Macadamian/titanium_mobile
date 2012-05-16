@@ -10,6 +10,7 @@
 #include "TiCascadesEventHandler.h"
 #include "NativeOptionObject.h"
 #include <bb/cascades/DropDown>
+#include <qt4/QtCore/qvector.h>
 
 NativeDropDownObject::NativeDropDownObject()
 {
@@ -35,7 +36,6 @@ int NativeDropDownObject::initialize(TiEventContainerFactory* containerFactory)
     dropdown_ = bb::cascades::DropDown::create();
     setControl(dropdown_);
     eventClick_ = containerFactory->createEventContainer();
-    eventClick_->setDataProperty("type", "click");
     eventHandler_ = new TiCascadesEventHandler(eventClick_);
     return NATIVE_ERROR_OK;
 }
@@ -45,23 +45,31 @@ NAHANDLE NativeDropDownObject::getNativeHandle() const
     return dropdown_;
 }
 
-int NativeDropDownObject::setTitle(const char* title)
+int NativeDropDownObject::setTitle(TiObject* obj)
 {
-    QString str = title;
-    dropdown_->setTitle(str);
-    dropdown_->add(bb::cascades::Option::create().text("Option 1"));
-    dropdown_->add(bb::cascades::Option::create().text("Option 2"));
-    dropdown_->add(bb::cascades::Option::create().text("Option 3"));
+    QString title;
+    int error = NativeControlObject::_getString(obj, title);
+    if (!N_SUCCEEDED(error))
+    {
+        return error;
+    }
+    dropdown_->setTitle(title);
     return NATIVE_ERROR_OK;
 }
 
-int NativeDropDownObject::setOptions(const char* options[])
+int NativeDropDownObject::setOptions(TiObject* obj)
 {
-    unsigned int length = sizeof(options);
-    for (unsigned int i = 0; i < length; ++i)
+    QVector<QString> options;
+    int error = NativeControlObject::_getStringArray(obj, options);
+    if (!N_SUCCEEDED(error))
+    {
+        return error;
+    }
+    for (int i = 0; i < options.size(); ++i)
     {
         NativeOptionObject* option = NativeOptionObject::createOption();
-        option->setText(options[i]);
+        option->initialize(NULL);
+        option->setText(options[i].toStdString().c_str());
         dropdown_->add((bb::cascades::Option*)option->getNativeHandle());
         option->release();
     }
@@ -69,9 +77,15 @@ int NativeDropDownObject::setOptions(const char* options[])
     return NATIVE_ERROR_OK;
 }
 
-int NativeDropDownObject::setSelectedIndex(int index)
+int NativeDropDownObject::setSelectedIndex(TiObject* obj)
 {
-    dropdown_->setSelectedIndex(index);
+    int value = 0;
+    int error = NativeControlObject::_getInteger(obj, &value);
+    if (!N_SUCCEEDED(error))
+    {
+        return error;
+    }
+    dropdown_->setSelectedIndex(value);
     return NATIVE_ERROR_OK;
 }
 

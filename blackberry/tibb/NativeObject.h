@@ -68,23 +68,25 @@ typedef void* NAHANDLE;
 #define N_PROP_MIN                              38
 #define N_PROP_MINIMUM_FONT_SIZE                39
 #define N_PROP_OPACITY                          40
-#define N_PROP_RIGHT                            41
-#define N_PROP_SHADOW_COLOR                     42
-#define N_PROP_SHADOW_OFFSET                    43
-#define N_PROP_SIZE                             44
-#define N_PROP_SOFT_KEYBOARD_ON_FOCUS           45
-#define N_PROP_TEXT                             46
-#define N_PROP_TEXT_ALIGN                       47
-#define N_PROP_TEXT_ID                          48
-#define N_PROP_TITLE                            49
-#define N_PROP_TOP                              50
-#define N_PROP_TOUCH_ENABLED                    51
-#define N_PROP_TRANSFORM                        52
-#define N_PROP_VALUE                            53
-#define N_PROP_VISIBLE                          54
-#define N_PROP_WIDTH                            55
-#define N_PROP_WORD_WRAP                        56
-#define N_PROP_ZINDEX                           57
+#define N_PROP_OPTIONS                          41
+#define N_PROP_RIGHT                            42
+#define N_PROP_SELECTED_INDEX                   43
+#define N_PROP_SHADOW_COLOR                     44
+#define N_PROP_SHADOW_OFFSET                    45
+#define N_PROP_SIZE                             46
+#define N_PROP_SOFT_KEYBOARD_ON_FOCUS           47
+#define N_PROP_TEXT                             48
+#define N_PROP_TEXT_ALIGN                       49
+#define N_PROP_TEXT_ID                          50
+#define N_PROP_TITLE                            51
+#define N_PROP_TOP                              52
+#define N_PROP_TOUCH_ENABLED                    53
+#define N_PROP_TRANSFORM                        54
+#define N_PROP_VALUE                            55
+#define N_PROP_VISIBLE                          56
+#define N_PROP_WIDTH                            57
+#define N_PROP_WORD_WRAP                        58
+#define N_PROP_ZINDEX                           59
 
 class NativeObjectFactory;
 class TiEvent;

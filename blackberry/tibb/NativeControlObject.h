@@ -19,6 +19,7 @@
 
 class TiObject;
 class QString;
+class QVector<class T>;
 
 class NativeControlObject : public NativeObject
 {
@@ -36,10 +37,14 @@ public:
     virtual int setTitle(TiObject* obj);
     virtual int setValue(TiObject* obj);
     virtual int setVisible(TiObject* obj);
-    static int getColorComponents(TiObject* obj, float* r, float* g, float* b, float* a);
-    static int getBoolean(TiObject* obj, bool* value);
-    static int getString(TiObject* obj, QString& str);
-    static int getFloat(TiObject* obj, float* value);
+    virtual int setOptions(TiObject* obj);
+    virtual int setSelectedIndex(TiObject* obj);
+    static int _getColorComponents(TiObject* obj, float* r, float* g, float* b, float* a);
+    static int _getBoolean(TiObject* obj, bool* value);
+    static int _getString(TiObject* obj, QString& str);
+    static int _getFloat(TiObject* obj, float* value);
+    static int _getStringArray(TiObject* obj, QVector<QString>& value);
+    static int _getInteger(TiObject* obj, int* value);
 
 protected:
     NativeControlObject();
