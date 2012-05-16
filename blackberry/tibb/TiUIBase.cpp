@@ -84,6 +84,16 @@ const static TiProperty g_tiProperties[] =
     {
         "visible", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
         N_PROP_VISIBLE
+    },
+
+    {
+        "options", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        N_PROP_OPTIONS
+    },
+
+    {
+        "selectedIndex", TI_PROP_PERMISSION_READ | TI_PROP_PERMISSION_WRITE,
+        N_PROP_SELECTED_INDEX
     }
 };
 
@@ -146,7 +156,7 @@ NativeObject* TiUIBase::getNativeObject() const
     return nativeObject_;
 }
 
-void TiUIBase::setTiMappingProperties(const TiProperty* props, int propertyCount)
+void TiUIBase::setTiMappingProperties(const TiProperty* prop, int propertyCount)
 {
     string name;
     char c[2];
@@ -157,19 +167,18 @@ void TiUIBase::setTiMappingProperties(const TiProperty* props, int propertyCount
                           valueModify, this);
         if (prop[i].permissions & TI_PROP_PERMISSION_WRITE)
         {
-            c[0] = toupper(props[i].propertyName[0]);
+            c[0] = toupper(prop[i].propertyName[0]);
             name = "set";
             name += c;
-            name += props[i].propertyName + 1;
+            name += prop[i].propertyName + 1;
             TiPropertySetFunctionObject::addPropertySetter(this, value, name.c_str());
         }
-        // For all properties that have read permissions, add a getter method, e.g., var test=myLabel.text; var test=myLabel.getText();
-        if (props[i].permissions & TI_PROP_PERMISSION_READ)
+        if (prop[i].permissions & TI_PROP_PERMISSION_READ)
         {
-            c[0] = toupper(props[i].propertyName[0]);
+            c[0] = toupper(prop[i].propertyName[0]);
             name = "get";
             name += c;
-            name += props[i].propertyName + 1;
+            name += prop[i].propertyName + 1;
             TiPropertyGetFunctionObject::addPropertyGetter(this, value, name.c_str());
         }
         value->release();

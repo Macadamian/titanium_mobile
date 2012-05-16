@@ -20,6 +20,7 @@
 #include <bb/cascades/Stacklayout>
 #include <bb/cascades/TextField>
 #include <bb/cascades/ActivityIndicator>
+#include <bb/cascades/DropDown>
 #include <qtgui/QColor>
 
 using namespace bb::cascades;
@@ -134,7 +135,14 @@ int NativeContainerObject::addChildNativeObject(NativeObject* obj)
         bb::cascades::TextField* textField = (bb::cascades::TextField*) obj->getNativeHandle();
         container_->add(textField);
         return NATIVE_ERROR_OK;
+    }
 
+    case N_TYPE_DROPDOWN:
+
+    {
+        bb::cascades::DropDown* dropdown = (bb::cascades::DropDown*) obj->getNativeHandle();
+        container_->add(dropdown);
+        return NATIVE_ERROR_OK;
     }
 
     }
@@ -144,8 +152,20 @@ int NativeContainerObject::addChildNativeObject(NativeObject* obj)
 
 int NativeContainerObject::open()
 {
-    container_->setLayout(new AbsoluteLayout());
-    nativeObjectFactory_->setRootContainer(this);
+    bb::cascades::Container* appContainer = Container::create();
+    appContainer->setLayout(new DockLayout());
+    container_->setLayout(StackLayout::create());
+    DockLayoutProperties* layout = DockLayoutProperties::create();
+    layout->setHorizontalAlignment(HorizontalAlignment::Fill);
+    layout->setVerticalAlignment(VerticalAlignment::Fill);
+    container_->setLayoutProperties(layout);
+    // TODO: remove this hard coded width
+    appContainer->setPreferredWidth(1024.0f);
+    container_->setPreferredWidth(1024.0f);
+    appContainer->add(container_);
+    NativeContainerObject* root = new NativeContainerObject(appContainer);
+    nativeObjectFactory_->setRootContainer(root);
+    root->release();
     return NATIVE_ERROR_OK;
 }
 
@@ -156,7 +176,7 @@ int NativeContainerObject::setBackgroundColor(TiObject* obj)
     float b;
     float a;
 
-    int error = NativeControlObject::getColorComponents(obj, &r, &g, &b, &a);
+    int error = NativeControlObject::_getColorComponents(obj, &r, &g, &b, &a);
     if (error != NATIVE_ERROR_OK)
     {
         return error;

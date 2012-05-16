@@ -33,7 +33,7 @@ int NativeLabelObject::getObjectType() const
 int NativeLabelObject::setText(TiObject* obj)
 {
     QString str;
-    int error = NativeControlObject::getString(obj, str);
+    int error = NativeControlObject::_getString(obj, str);
     if (error != NATIVE_ERROR_OK)
     {
         return error;
@@ -49,7 +49,7 @@ int NativeLabelObject::setColor(TiObject* obj)
     float b;
     float a;
 
-    int error = NativeControlObject::getColorComponents(obj, &r, &g, &b, &a);
+    int error = NativeControlObject::_getColorComponents(obj, &r, &g, &b, &a);
     if (error != NATIVE_ERROR_OK)
     {
         return error;
@@ -63,6 +63,24 @@ int NativeLabelObject::setColor(TiObject* obj)
 
 int NativeLabelObject::setTextAlign(TiObject* obj)
 {
+    /*
+    if (stricmp(align, "left") == 0)
+    {
+        label_->setTextAlignment(bb::cascades::TextAlignment::ForceLeft);
+    }
+    else if (stricmp(align, "right") == 0)
+    {
+        label_->setTextAlignment(bb::cascades::TextAlignment::ForceRight);
+    }
+    else if (stricmp(align, "center") == 0)
+    {
+        label_->setTextAlignment(bb::cascades::TextAlignment::Center);
+    }
+    else
+    {
+        return NATIVE_ERROR_INVALID_ARG;
+    }
+    */
     return NATIVE_ERROR_OK;
 }
 

@@ -45,7 +45,7 @@ NAHANDLE NativeSliderObject::getNativeHandle() const
 int NativeSliderObject::setMax(TiObject* obj)
 {
     float value;
-    int error = NativeControlObject::getFloat(obj, &value);
+    int error = NativeControlObject::_getFloat(obj, &value);
     if (!N_SUCCEEDED(error))
     {
         return error;
@@ -57,7 +57,7 @@ int NativeSliderObject::setMax(TiObject* obj)
 int NativeSliderObject::setMin(TiObject* obj)
 {
     float value;
-    int error = NativeControlObject::getFloat(obj, &value);
+    int error = NativeControlObject::_getFloat(obj, &value);
     if (!N_SUCCEEDED(error))
     {
         return error;
@@ -69,7 +69,7 @@ int NativeSliderObject::setMin(TiObject* obj)
 int NativeSliderObject::setValue(TiObject* obj)
 {
     float value;
-    int error = NativeControlObject::getFloat(obj, &value);
+    int error = NativeControlObject::_getFloat(obj, &value);
     if (!N_SUCCEEDED(error))
     {
         return error;
