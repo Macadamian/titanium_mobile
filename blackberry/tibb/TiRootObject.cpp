@@ -127,7 +127,7 @@ Handle<Value> TiRootObject::_decodeURIComponent(void* userContext, TiObject* cal
         return Undefined();
     }
 
-    const String::Utf8Value v8UtfString(args[0]);
+    const String::Utf8Value v8UtfString(args[0]->ToString());
     QString decoded = QUrl::fromPercentEncoding(*v8UtfString);
 
     Handle<String> result = String::New(decoded.toUtf8());
@@ -143,7 +143,7 @@ Handle<Value> TiRootObject::_encodeURIComponent(void* userContext, TiObject* cal
         return Undefined();
     }
 
-    const String::Utf8Value v8UtfString(args[0]);
+    const String::Utf8Value v8UtfString(args[0]->ToString());
     QString encoded = QUrl(*v8UtfString).toEncoded();
 
     Handle<String> result = String::New(encoded.toUtf8());
