@@ -80,8 +80,6 @@ methods:
         For more information, see the MDN website for 
         [encodeURIComponent](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/encodeURIComponent) 
         and [decodeURIComponent](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/decodeURIComponent).
-
-        On BlackBerry: NYI
     returns:
         summary: Decoded string.
         type: String
@@ -98,8 +96,6 @@ methods:
         For more information, see the MDN website for 
         [encodeURIComponent](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/encodeURIComponent) 
         and [decodeURIComponent](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/decodeURIComponent).
-
-        On BlackBerry: NYI
     returns:
         summary: Encoded string.
         type: String
