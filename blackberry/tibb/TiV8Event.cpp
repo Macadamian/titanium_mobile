@@ -46,6 +46,18 @@ void TiV8Event::fire(void* fireDataObject)
     }
 }
 
+void TiV8Event::fire()
+{
+    HandleScope handleScope;
+    if (function_.IsEmpty())
+    {
+        return;
+    }
+    Handle<Context> context = function_->CreationContext();
+    Context::Scope context_scope(context);
+    function_->CallAsFunction(context->Global(), 0, 0);
+}
+
 TiV8Event* TiV8Event::createEvent(const char* eventName, Handle<Function> eventScript, Handle<Object> source)
 {
     HandleScope handleScope;
