@@ -102,7 +102,7 @@ int NativeTabObject::openWindowOnTab(NativeObject* obj)
     return NATIVE_ERROR_NOTSUPPORTED;
 }
 
-int NativeTabObject::initialize(TiEventContainerFactory* containerFactory)
+int NativeTabObject::initialize()
 {
 	// TODO: fix for R6
     //tabProperties_ = TabbedPaneProperties::create();
