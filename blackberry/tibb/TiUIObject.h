@@ -47,6 +47,7 @@ private:
     static Handle<Value> _createTableView(void* userContext, TiObject* caller, const Arguments& args);
     static Handle<Value> _createPicker(void* userContext, TiObject* caller, const Arguments& args);
     static Handle<Value> _createAlertDialog(void* userContext, TiObject* caller, const Arguments& args);
+    static Handle<Value> _createTableViewRow(void* userContext, TiObject*, const Arguments& args);
     NativeObjectFactory* objectFactory_;
     NativeObject* contentContainer_;
 };
