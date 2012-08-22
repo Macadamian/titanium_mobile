@@ -34,7 +34,9 @@ public:
     virtual int show();
     virtual int hide();
     virtual int setTitle(TiObject* obj);
+    virtual int getTitle(TiObject* obj);
     virtual int setMessage(TiObject* obj);
+    virtual int getMessage(TiObject* obj);
     virtual int setButtonNames(TiObject* obj);
     virtual int getButtonNames(TiObject* obj);
     virtual int setCancel(TiObject* obj);

@@ -737,6 +737,14 @@ int NativeControlObject::setOpacity(TiObject* obj)
     return NATIVE_ERROR_OK;
 }
 
+PROP_SETGET(getOpacity)
+int NativeControlObject::getOpacity(TiObject* obj)
+{
+    Q_ASSERT(obj != NULL);
+    obj->setValue(Number::New(container_->opacity()));
+    return NATIVE_ERROR_OK;
+}
+
 PROP_SETGET(setOptions)
 int NativeControlObject::setOptions(TiObject*)
 {
@@ -763,6 +771,12 @@ int NativeControlObject::setTextAlign(TiObject*)
 
 PROP_SETGET(setTitle)
 int NativeControlObject::setTitle(TiObject*)
+{
+    return NATIVE_ERROR_NOTSUPPORTED;
+}
+
+PROP_SETGET(getTitle)
+int NativeControlObject::getTitle(TiObject*)
 {
     return NATIVE_ERROR_NOTSUPPORTED;
 }
@@ -1035,6 +1049,12 @@ int NativeControlObject::setMessage(TiObject*)
     return NATIVE_ERROR_NOTSUPPORTED;
 }
 
+PROP_SETGET(getMessage)
+int NativeControlObject::getMessage(TiObject* obj)
+{
+    return NATIVE_ERROR_NOTSUPPORTED;
+}
+
 // PROP_SETTING_FUNCTION resolves the static name of the function, e.g.,
 // PROP_SETTING_FUNCTION(setBackgroundColor) resolves to "prop_setBackgroundColor"
 
@@ -1059,10 +1079,10 @@ const static NATIVE_PROPSETGET_SETTING g_propSetGet[] =
     {N_PROP_LEFT, PROP_SETGET_FUNCTION(setLeft), PROP_SETGET_FUNCTION(getLeft)},
     {N_PROP_MAX, PROP_SETGET_FUNCTION(setMax), NULL},
     {N_PROP_MAXDATE, PROP_SETGET_FUNCTION(setMaxDate), NULL},
-    {N_PROP_MESSAGE, PROP_SETGET_FUNCTION(setMessage), NULL},
+    {N_PROP_MESSAGE, PROP_SETGET_FUNCTION(setMessage), PROP_SETGET_FUNCTION(getMessage)},
     {N_PROP_MIN, PROP_SETGET_FUNCTION(setMin), NULL},
     {N_PROP_MINDATE, PROP_SETGET_FUNCTION(setMinDate), NULL},
-    {N_PROP_OPACITY, PROP_SETGET_FUNCTION(setOpacity), NULL},
+    {N_PROP_OPACITY, PROP_SETGET_FUNCTION(setOpacity), PROP_SETGET_FUNCTION(getOpacity)},
     {N_PROP_OPTIONS, PROP_SETGET_FUNCTION(setOptions), NULL},
     {N_PROP_RECT, NULL, PROP_SETGET_FUNCTION(getRect)},
     {N_PROP_RIGHT, PROP_SETGET_FUNCTION(setRight), PROP_SETGET_FUNCTION(getRight)},
@@ -1070,7 +1090,7 @@ const static NATIVE_PROPSETGET_SETTING g_propSetGet[] =
     {N_PROP_SIZE, NULL, PROP_SETGET_FUNCTION(getSize)},
     {N_PROP_TEXT, PROP_SETGET_FUNCTION(setText), NULL},
     {N_PROP_TEXT_ALIGN, PROP_SETGET_FUNCTION(setTextAlign), NULL},
-    {N_PROP_TITLE, PROP_SETGET_FUNCTION(setTitle), NULL},
+    {N_PROP_TITLE, PROP_SETGET_FUNCTION(setTitle), PROP_SETGET_FUNCTION(getTitle)},
     {N_PROP_TOP, PROP_SETGET_FUNCTION(setTop), PROP_SETGET_FUNCTION(getTop)},
     {N_PROP_TYPE, PROP_SETGET_FUNCTION(setType), NULL},
     {N_PROP_VALUE, PROP_SETGET_FUNCTION(setValue), NULL},

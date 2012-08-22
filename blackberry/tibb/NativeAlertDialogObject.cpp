@@ -49,6 +49,13 @@ int NativeAlertDialogObject::setTitle(TiObject* obj)
     return NATIVE_ERROR_OK;
 }
 
+int NativeAlertDialogObject::getTitle(TiObject* obj)
+{
+    Handle<String> titleProperty = String::New(nativeDialog_->title().toUtf8());
+    obj->setValue(titleProperty);
+    return NATIVE_ERROR_OK;
+}
+
 int NativeAlertDialogObject::setMessage(TiObject* obj)
 {
     Q_ASSERT(nativeDialog_ != NULL);
@@ -59,6 +66,13 @@ int NativeAlertDialogObject::setMessage(TiObject* obj)
         return error;
     }
     nativeDialog_->setBody(message);
+    return NATIVE_ERROR_OK;
+}
+
+int NativeAlertDialogObject::getMessage(TiObject* obj)
+{
+    Handle<String> messageProperty = String::New(nativeDialog_->body().toUtf8());
+    obj->setValue(messageProperty);
     return NATIVE_ERROR_OK;
 }
 
