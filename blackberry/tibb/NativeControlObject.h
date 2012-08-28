@@ -77,9 +77,12 @@ public:
     virtual int getPropertyValue(size_t propertyNumber, TiObject* obj);
     virtual int getHeight(TiObject* obj);
     virtual int getLeft(TiObject* obj);
+    virtual int getMessage(TiObject* obj);
+    virtual int getOpacity(TiObject* obj);
     virtual int getRight(TiObject* obj);
     virtual int getRect(TiObject* obj);
     virtual int getSize(TiObject* obj);
+    virtual int getTitle(TiObject* obj);
     virtual int getTop(TiObject* obj);
     virtual int getVisible(TiObject* obj);
     virtual int getWidth(TiObject* obj);
