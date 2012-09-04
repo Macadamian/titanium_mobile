@@ -11,6 +11,8 @@
 #include "TiCascadesApp.h"
 #include <bb/cascades/Container>
 #include <bb/cascades/Page>
+#include <bb/cascades/TitleBar>
+#include <bb/cascades/ChromeVisibility>
 
 using namespace bb::cascades;
 
@@ -53,8 +55,10 @@ int NativePageObject::initialize()
     container_->resetLayoutProperties();
     page_ = Page::create();
     page_->setContent(container_);
+    titleBar_ = TitleBar::create();
+    page_->setTitleBar(titleBar_);
 
-    if (container_ == NULL || page_ == NULL)
+    if (container_ == NULL || page_ == NULL || titleBar_ == NULL)
     {
         return NATIVE_ERROR_OUTOFMEMORY;
     }
@@ -78,4 +82,25 @@ int NativePageObject::open()
 int NativePageObject::removeChildNativeObject(NativeObject* obj)
 {
     return removeChildImpl(obj);
+}
+
+int NativePageObject::setTitle(TiObject* obj)
+{
+
+    QString str;
+
+    int error = NativeControlObject::getString(obj, str);
+
+    if (!N_SUCCEEDED(error))
+    {
+        titleBar_->setVisibility(ChromeVisibility::Hidden);        
+        return error;
+    }
+
+    titleBar_->setVisibility(ChromeVisibility::Visible);
+    titleBar_->setTitle(str);
+    
+    
+
+    return NATIVE_ERROR_OK;
 }
